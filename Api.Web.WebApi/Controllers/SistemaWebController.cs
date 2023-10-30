@@ -60,5 +60,26 @@ namespace Api.Web.WebApi.Controllers
             }
             return _Response;
         }
+
+        [HttpPost, DisableRequestSizeLimit]
+        //[Produces("application/json")]
+        //[Consumes("application/json", "multipart/form-data")]
+        [Route("/UpdateProducto")]
+        public async Task<OperationResult> UpdateProducto(UpdateProductoRequestDTO _Request)
+        {
+            OperationResult _Response = new OperationResult();
+            try
+            {
+                _Response = await _IServicesGeneric.UpdateProducto(_Request);
+            }
+            catch (Exception ex)
+            {
+                this._Logger.LogError(ex);
+                _Response.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.AddException(ex);
+            }
+            return _Response;
+        }
+
     }
 }

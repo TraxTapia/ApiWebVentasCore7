@@ -14,5 +14,6 @@ namespace Api.Web.WebApi.Infrastructure.Interfaces
     {
         Task<ListProductsResponseDTO> GetProducts();
         Task<OperationResult> SaveProducto(SaveProductoRequestDTO _Request);
+        Task<OperationResult> UpdateProducto(UpdateProductoRequestDTO _Request);
     }
 }

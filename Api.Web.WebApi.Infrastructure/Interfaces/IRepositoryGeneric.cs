@@ -13,9 +13,8 @@ namespace Api.Web.WebApi.Infrastructure.Interfaces
     public interface IRepositoryGeneric
     {
         Task<List<ProductoDTO>> GetAllProductos();
-        //Task Add<T>(T entity) where T :class;
         Task<OperationResult> SaveProduct(Producto _Request);
-        //Task<List<Producto>> GetAllProducts();
-        //Task<List<Categoria>> GetAllCategoria();
+        Task<Producto> GetProductById(int Id);
+        Task<OperationResult> UpdateProduct(Producto _Request);
     }
 }

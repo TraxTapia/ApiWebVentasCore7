@@ -23,25 +23,6 @@ namespace Api.Web.WebApi.Infrastructure.Repository
         {
             _dbContext = contextVenta;
         }
-        //public async Task Add<T>(T entity) where T : class
-        //{
-        //    //await _dbContext.Set<T>().AddAsync(entity);
-        //    //await _dbContext.SaveChangesAsync();
-
-        //    try
-        //    {
-
-        //        await _dbContext.Set<T>().AddAsync(entity);
-        //        await _dbContext.SaveChangesAsync();
-
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Manejar la excepción aquí
-        //        throw new Exception(ex.Message);
-        //    }
-        //}
         public async Task<List<ProductoDTO>> GetAllProductos()
         {
             return await (from a in _dbContext.Producto
@@ -72,18 +53,24 @@ namespace Api.Web.WebApi.Infrastructure.Repository
             }
             return _Response;
         }
-
-
-        //public async Task<List<Producto>> GetAllProducts()
-        //{
-        //    return await _dbContext.Producto
-        //        .ToListAsync();
-        //}
-        //public async Task<List<Categoria>> GetAllCategoria()
-        //{
-        //    return await _dbContext.Categoria
-        //        .ToListAsync();
-        //}
+        public async Task<Producto> GetProductById(int Id)
+        {
+            return await _dbContext.Producto.AsNoTracking().FirstOrDefaultAsync(x => x.IdProducto == Id);
+        }
+        public async Task<OperationResult> UpdateProduct(Producto _Request)
+        {
+            OperationResult _Response = new OperationResult();
+            try
+            {
+                _dbContext.Producto.Update(_Request);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return _Response;
+        }
 
     }
 }

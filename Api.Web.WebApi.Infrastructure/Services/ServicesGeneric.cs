@@ -19,7 +19,7 @@ using Api.Web.WebApi.Infrastructure.Repository;
 
 namespace Api.Web.WebApi.Infrastructure.Services
 {
-    public class ServicesGeneric: IServicesGeneric
+    public class ServicesGeneric : IServicesGeneric
     {
         public IRepositoryGeneric _Repo;
         private readonly Logger _Logger;
@@ -75,7 +75,40 @@ namespace Api.Web.WebApi.Infrastructure.Services
                     FechaRegistro = DateTime.Now,
                     Activo = true
                 };
-               await _Repo.SaveProduct(_SaveProducto);
+                await _Repo.SaveProduct(_SaveProducto);
+            }
+            catch (Exception ex)
+            {
+                _Response.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.AddException(ex);
+                throw new Exception(ex.Message);
+            }
+            return _Response;
+
+        }
+        public async Task<OperationResult> UpdateProducto(UpdateProductoRequestDTO _Request)
+        {
+            OperationResult _Response = new OperationResult();
+            UtilitiesGeneric _Utilities = new UtilitiesGeneric();
+            RepositoryGeneric _Repo = new RepositoryGeneric(_dbContext);
+            try
+            {
+                var _Data = await _Repo.GetProductById(_Request.IdProducto);
+                if (_Data == null)
+                {
+                    _Response.SetStatusCode(OperationResult.StatusCodesEnum.NOT_FOUND);
+                    _Response.AddException(new Exception("No se encontraron resultados."));
+                    return _Response;
+                }
+
+
+                _Data.IdCategoria = _Request.IdCategoria;
+                _Data.Descripcion = _Request.Descripcion.Trim();
+                _Data.PrecioCompra = _Request.PrecioCompra;
+                _Data.PrecioVenta = _Request.PrecioVenta;
+                _Data.Stock = _Request.Stock;
+
+                await _Repo.UpdateProduct(_Data);
             }
             catch (Exception ex)
             {
