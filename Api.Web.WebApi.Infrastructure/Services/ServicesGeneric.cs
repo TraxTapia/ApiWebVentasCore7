@@ -119,6 +119,141 @@ namespace Api.Web.WebApi.Infrastructure.Services
             return _Response;
 
         }
+        public async Task<OperationResult> DeleteProduct(int _IdProducto)
+        {
+            OperationResult _Response = new OperationResult();
+            UtilitiesGeneric _Utilities = new UtilitiesGeneric();
+            RepositoryGeneric _Repo = new RepositoryGeneric(_dbContext);
+            try
+            {
+                var _Data = await _Repo.GetProductById(_IdProducto);
+                if (_Data == null)
+                {
+                    _Response.SetStatusCode(OperationResult.StatusCodesEnum.NOT_FOUND);
+                    _Response.AddException(new Exception("No se encontraron resultados a eliminar."));
+                    return _Response;
+                }
+                _Data.Activo = false;
+                
 
+                await _Repo.UpdateProduct(_Data);
+            }
+            catch (Exception ex)
+            {
+                _Response.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.AddException(ex);
+                throw new Exception(ex.Message);
+            }
+            return _Response;
+
+        }
+
+        public async Task<ListCategoriasResponseDTO> GetCategorias()
+        {
+            ListCategoriasResponseDTO _Response = new ListCategoriasResponseDTO();
+            try
+            {
+               var _Data = await _Repo.GetAllCategorias();
+                if (!_Data.Any())
+                {
+                    _Response.Result.SetStatusCode(OperationResult.StatusCodesEnum.NOT_FOUND);
+                    _Response.Result.AddException(new Exception("No se encontraron resultados."));
+                    return _Response;
+                }
+                _Response.Items = _Data.Select(x => new CategoriaDTO()
+                {
+                    IdCategoria = x.IdCategoria,
+                    Descripcion = x.Descripcion.Trim(),
+                    Activo = x.Activo
+
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                _Response.Result.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.Result.AddException(ex);
+                throw new Exception(ex.Message);
+            }
+
+            return _Response;
+
+        }
+        public async Task<OperationResult> SaveCategoria(string _Descripcion)
+        {
+            OperationResult _Response = new OperationResult();
+            UtilitiesGeneric _Utilities = new UtilitiesGeneric();
+            RepositoryGeneric _Repo = new RepositoryGeneric(_dbContext);
+            try
+            {
+                Categoria _SaveCategoria = new Categoria()
+                {
+                    Descripcion = _Descripcion.Trim(),
+                    FechaRegistro = DateTime.Now,
+                    Activo = true
+                };
+                await _Repo.SaveCategoria(_SaveCategoria);
+            }
+            catch (Exception ex)
+            {
+                _Response.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.AddException(ex);
+                throw new Exception(ex.Message);
+            }
+            return _Response;
+
+        }
+        public async Task<OperationResult> UpdateCategoria(UpdateCategoriaRequestDTO _Request)
+        {
+            OperationResult _Response = new OperationResult();
+            UtilitiesGeneric _Utilities = new UtilitiesGeneric();
+            RepositoryGeneric _Repo = new RepositoryGeneric(_dbContext);
+            try
+            {
+                var _Data = await _Repo.GetByIdCategoria(_Request.IdCategoria);
+                if (_Data == null)
+                {
+                    _Response.SetStatusCode(OperationResult.StatusCodesEnum.NOT_FOUND);
+                    _Response.AddException(new Exception("No se encontraron resultados."));
+                    return _Response;
+                }
+                _Data.Descripcion = _Request.Descripcion.Trim();
+
+                await _Repo.UpdateCategoria(_Data);
+            }
+            catch (Exception ex)
+            {
+                _Response.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.AddException(ex);
+                throw new Exception(ex.Message);
+            }
+            return _Response;
+
+        }
+        public async Task<OperationResult> DeleteCategoria(int _IdCategoria)
+        {
+            OperationResult _Response = new OperationResult();
+            UtilitiesGeneric _Utilities = new UtilitiesGeneric();
+            RepositoryGeneric _Repo = new RepositoryGeneric(_dbContext);
+            try
+            {
+                var _Data = await _Repo.GetByIdCategoria(_IdCategoria);
+                if (_Data == null)
+                {
+                    _Response.SetStatusCode(OperationResult.StatusCodesEnum.NOT_FOUND);
+                    _Response.AddException(new Exception("No se encontraron resultados a eliminar."));
+                    return _Response;
+                }
+                _Data.Activo = false;
+                await _Repo.UpdateCategoria(_Data);
+            }
+            catch (Exception ex)
+            {
+                _Response.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.AddException(ex);
+                throw new Exception(ex.Message);
+            }
+            return _Response;
+
+        }
     }
 }

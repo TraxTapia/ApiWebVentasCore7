@@ -81,5 +81,106 @@ namespace Api.Web.WebApi.Controllers
             return _Response;
         }
 
+        [HttpPost, DisableRequestSizeLimit]
+        //[Produces("application/json")]
+        //[Consumes("application/json", "multipart/form-data")]
+        [Route("/DeleteProduct")]
+        public async Task<OperationResult> DeleteProduct([FromBody]int _IdProducto)
+        {
+            OperationResult _Response = new OperationResult();
+            try
+            {
+                _Response = await _IServicesGeneric.DeleteProduct(_IdProducto);
+            }
+            catch (Exception ex)
+            {
+                this._Logger.LogError(ex);
+                _Response.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.AddException(ex);
+            }
+            return _Response;
+        }
+
+        [HttpGet, DisableRequestSizeLimit]
+        //[Produces("application/json")]
+        //[Consumes("application/json", "multipart/form-data")]
+        [Route("/GetCategorias")]
+        public async Task<ListCategoriasResponseDTO> GetCategorias()
+        {
+            ListCategoriasResponseDTO _Response = new ListCategoriasResponseDTO();
+            try
+            {
+                _Response = await _IServicesGeneric.GetCategorias();
+            }
+            catch (Exception ex)
+            {
+                this._Logger.LogError(ex);
+                _Response.Result.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.Result.AddException(ex);
+            }
+            return _Response;
+        }
+
+        [HttpPost, DisableRequestSizeLimit]
+        //[Produces("application/json")]
+        //[Consumes("application/json", "multipart/form-data")]
+        [Route("/SaveCategoria")]
+        public async Task<OperationResult> SaveCategoria([FromBody] string _Descripcion)
+        {
+            OperationResult _Response = new OperationResult();
+            try
+            {
+                _Response = await _IServicesGeneric.SaveCategoria(_Descripcion);
+            }
+            catch (Exception ex)
+            {
+                this._Logger.LogError(ex);
+                _Response.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.AddException(ex);
+            }
+            return _Response;
+        }
+
+        [HttpPost, DisableRequestSizeLimit]
+        //[Produces("application/json")]
+        //[Consumes("application/json", "multipart/form-data")]
+        [Route("/UpdateCategoria")]
+        public async Task<OperationResult> UpdateCategoria(UpdateCategoriaRequestDTO _Request)
+        {
+            OperationResult _Response = new OperationResult();
+            try
+            {
+                _Response = await _IServicesGeneric.UpdateCategoria(_Request);
+            }
+            catch (Exception ex)
+            {
+                this._Logger.LogError(ex);
+                _Response.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.AddException(ex);
+            }
+            return _Response;
+        }
+
+        [HttpPost, DisableRequestSizeLimit]
+        //[Produces("application/json")]
+        //[Consumes("application/json", "multipart/form-data")]
+        [Route("/DeleteCategoria")]
+        public async Task<OperationResult> DeleteCategoria([FromBody] int _IdCategoria)
+        {
+            OperationResult _Response = new OperationResult();
+            try
+            {
+                _Response = await _IServicesGeneric.DeleteCategoria(_IdCategoria);
+            }
+            catch (Exception ex)
+            {
+                this._Logger.LogError(ex);
+                _Response.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.AddException(ex);
+            }
+            return _Response;
+        }
+
+
     }
 }

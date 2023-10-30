@@ -71,6 +71,70 @@ namespace Api.Web.WebApi.Infrastructure.Repository
             }
             return _Response;
         }
+        public async Task<OperationResult> DeleteProduct(Producto _Request)
+        {
+            OperationResult _Response = new OperationResult();
+            try
+            {
+                _dbContext.Producto.Update(_Request);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return _Response;
+        }
 
+        public async Task<List<Categoria>> GetAllCategorias()
+        {
+            return await _dbContext.Categoria.AsNoTracking().ToListAsync();
+        }
+        public async Task<OperationResult>SaveCategoria(Categoria _Request)
+        {
+            OperationResult _Response = new OperationResult();
+            try
+            {
+                await _dbContext.Categoria.AddAsync(_Request);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return _Response;
+        }
+        public async Task<Categoria> GetByIdCategoria( int Id)
+        {
+            return await _dbContext.Categoria.AsNoTracking().FirstOrDefaultAsync(x=> x.IdCategoria == Id);
+        }
+        public async Task<OperationResult>UpdateCategoria(Categoria _Request)
+        {
+            OperationResult _Response = new OperationResult();
+            try
+            {
+                _dbContext.Categoria.Update(_Request);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return _Response;
+        }
+        public async Task<OperationResult>DeleteCategoria(Categoria _Request)
+        {
+            OperationResult _Response = new OperationResult();
+            try
+            {
+                _dbContext.Categoria.Update(_Request);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return _Response;
+        }
     }
 }

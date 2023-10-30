@@ -18,6 +18,7 @@ namespace Api.Web.WebApi.Models.DBVenta
         public string Descripcion { get; set; }
 
         public DateTime? FechaRegistro { get; set; }
+        public bool Activo { get; set; }
         //[ForeignKey("IdCategoria")]
         //public Producto oProducto { get; set; }
     }

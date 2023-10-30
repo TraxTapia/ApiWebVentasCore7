@@ -16,5 +16,12 @@ namespace Api.Web.WebApi.Infrastructure.Interfaces
         Task<OperationResult> SaveProduct(Producto _Request);
         Task<Producto> GetProductById(int Id);
         Task<OperationResult> UpdateProduct(Producto _Request);
+        Task<OperationResult> DeleteProduct(Producto _Request);
+        Task<List<Categoria>> GetAllCategorias();
+        Task<OperationResult> SaveCategoria(Categoria _Request);
+        Task<Categoria> GetByIdCategoria(int Id);
+        Task<OperationResult> UpdateCategoria(Categoria _Request);
+        Task<OperationResult> DeleteCategoria(Categoria _Request);
+
     }
 }
