@@ -16,13 +16,17 @@ namespace Api.Web.WebApi.Infrastructure.Interfaces
 {
     public interface IServicesGeneric
     {
+        #region Productos
         Task<ListProductsResponseDTO> GetProducts();
         Task<OperationResult> SaveProducto(SaveProductoRequestDTO _Request);
         Task<OperationResult> UpdateProducto(UpdateProductoRequestDTO _Request);
         Task<OperationResult> DeleteProduct(int _IdProducto);
+        #endregion
+        #region Categoria 
         Task<ListCategoriasResponseDTO> GetCategorias();
         Task<OperationResult> SaveCategoria(string _Descripcion);
         Task<OperationResult> UpdateCategoria(UpdateCategoriaRequestDTO _Request);
         Task<OperationResult> DeleteCategoria(int _IdCategoria);
+        #endregion
     }
 }

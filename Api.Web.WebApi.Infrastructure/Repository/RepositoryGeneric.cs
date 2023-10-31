@@ -14,15 +14,12 @@ namespace Api.Web.WebApi.Infrastructure.Repository
 {
     public class RepositoryGeneric : IRepositoryGeneric
     {
-        protected readonly DBContextVenta _dbContext;
-        public RepositoryGeneric()
-        {
-
-        }
+        protected readonly DBContextVenta _dbContext;       
         public RepositoryGeneric(DBContextVenta contextVenta)
         {
             _dbContext = contextVenta;
         }
+        #region Productos
         public async Task<List<ProductoDTO>> GetAllProductos()
         {
             return await (from a in _dbContext.Producto
@@ -85,7 +82,8 @@ namespace Api.Web.WebApi.Infrastructure.Repository
             }
             return _Response;
         }
-
+        #endregion
+        #region Categoria 
         public async Task<List<Categoria>> GetAllCategorias()
         {
             return await _dbContext.Categoria.AsNoTracking().ToListAsync();
@@ -136,5 +134,6 @@ namespace Api.Web.WebApi.Infrastructure.Repository
             }
             return _Response;
         }
+        #endregion
     }
 }

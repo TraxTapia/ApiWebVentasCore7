@@ -34,6 +34,7 @@ namespace Api.Web.WebApi.Infrastructure.Services
             _dbContext = contextVenta;
 
         }
+        #region Productos 
         public async Task<ListProductsResponseDTO> GetProducts()
         {
             ListProductsResponseDTO _Response = new ListProductsResponseDTO();
@@ -147,7 +148,8 @@ namespace Api.Web.WebApi.Infrastructure.Services
             return _Response;
 
         }
-
+        #endregion
+        #region Categoria 
         public async Task<ListCategoriasResponseDTO> GetCategorias()
         {
             ListCategoriasResponseDTO _Response = new ListCategoriasResponseDTO();
@@ -255,5 +257,9 @@ namespace Api.Web.WebApi.Infrastructure.Services
             return _Response;
 
         }
+        #endregion
+
+
+
     }
 }
