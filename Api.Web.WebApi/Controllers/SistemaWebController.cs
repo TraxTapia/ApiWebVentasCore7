@@ -181,6 +181,25 @@ namespace Api.Web.WebApi.Controllers
             return _Response;
         }
 
+        [HttpPost, DisableRequestSizeLimit]
+        //[Produces("application/json")]
+        //[Consumes("application/json", "multipart/form-data")]
+        [Route("/GetVentaByNroDocumento")]
+        public async Task<ListVentaResponseDTO> GetVentaByNroDocumento([FromBody]string _NroDocumento)
+        {
+            ListVentaResponseDTO _Response = new ListVentaResponseDTO();
+            try
+            {
+                _Response = await _IServicesGeneric.GetVentaByNroDocumento(_NroDocumento);
+            }
+            catch (Exception ex)
+            {
+                this._Logger.LogError(ex);
+                _Response.Result.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.Result.AddException(ex);
+            }
+            return _Response;
+        }
 
     }
 }

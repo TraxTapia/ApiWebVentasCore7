@@ -135,7 +135,7 @@ namespace Api.Web.WebApi.Infrastructure.Services
                     return _Response;
                 }
                 _Data.Activo = false;
-                
+
 
                 await _Repo.UpdateProduct(_Data);
             }
@@ -155,7 +155,7 @@ namespace Api.Web.WebApi.Infrastructure.Services
             ListCategoriasResponseDTO _Response = new ListCategoriasResponseDTO();
             try
             {
-               var _Data = await _Repo.GetAllCategorias();
+                var _Data = await _Repo.GetAllCategorias();
                 if (!_Data.Any())
                 {
                     _Response.Result.SetStatusCode(OperationResult.StatusCodesEnum.NOT_FOUND);
@@ -256,6 +256,29 @@ namespace Api.Web.WebApi.Infrastructure.Services
             }
             return _Response;
 
+        }
+        #endregion
+        #region Venta & Detalle Venta
+        public async Task<ListVentaResponseDTO> GetVentaByNroDocumento(string _NroDocumento)
+        {
+            ListVentaResponseDTO _Response = new ListVentaResponseDTO();
+            try
+            {
+                _Response.Items = await _Repo.GetDetalleVentaByCodeDocument(_NroDocumento);
+                if (!_Response.Items.Any())
+                {
+                    _Response.Result.SetStatusCode(OperationResult.StatusCodesEnum.NOT_FOUND);
+                    _Response.Result.AddException(new Exception("No se encontraron resultados con el número de documento " + _NroDocumento));
+                    return _Response;
+                }
+            }
+            catch (Exception ex)
+            {
+                _Response.Result.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.Result.AddException(ex);
+                throw new Exception(ex.Message);
+            }
+            return _Response;
         }
         #endregion
 

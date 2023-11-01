@@ -28,5 +28,8 @@ namespace Api.Web.WebApi.Infrastructure.Interfaces
         Task<OperationResult> UpdateCategoria(UpdateCategoriaRequestDTO _Request);
         Task<OperationResult> DeleteCategoria(int _IdCategoria);
         #endregion
+        #region Venta & Detalle Venta
+        Task<ListVentaResponseDTO> GetVentaByNroDocumento(string _NroDocumento);
+        #endregion
     }
 }
