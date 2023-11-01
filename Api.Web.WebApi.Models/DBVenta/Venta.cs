@@ -12,11 +12,11 @@ namespace Api.Web.WebApi.Models.DBVenta
     [Table("Venta")]
     public partial class Venta
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Venta()
-        {
-            Detalle_Venta = new HashSet<Detalle_Venta>();
-        }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        //public Venta()
+        //{
+        //    Detalle_Venta = new HashSet<Detalle_Venta>();
+        //}
 
         [Key]
         public int IdVenta { get; set; }
@@ -49,7 +49,7 @@ namespace Api.Web.WebApi.Models.DBVenta
 
         public DateTime? FechaRegistro { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Detalle_Venta> Detalle_Venta { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<Detalle_Venta> Detalle_Venta { get; set; }
     }
 }

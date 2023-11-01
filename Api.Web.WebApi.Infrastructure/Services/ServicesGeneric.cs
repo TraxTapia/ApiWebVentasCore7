@@ -280,6 +280,28 @@ namespace Api.Web.WebApi.Infrastructure.Services
             }
             return _Response;
         }
+        public async Task<RegistroVentaResponseDTO> RegisterVentas(SaveVentaRequestDTO _Request)
+        {
+            RegistroVentaResponseDTO _Response = new RegistroVentaResponseDTO();
+            try
+            {
+                _Response = await _Repo.RegisterVentas(_Request);
+                if (!_Response.Result.IsOK())
+                {
+                    _Response.Result.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                    _Response.Result.AddException(new Exception("Ocurrio un error al realizar la venta."));
+                    return _Response;
+                }
+            }
+            catch (Exception ex)
+            {
+                _Response.Result.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.Result.AddException(ex);
+                throw new Exception(ex.Message);
+            }
+            return _Response;
+        }
+
         #endregion
 
 

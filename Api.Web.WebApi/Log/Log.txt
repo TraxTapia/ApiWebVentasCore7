@@ -1,0 +1,6 @@
+01/11/2023 09:50:53.5053 a. m. | An error occurred while saving the entity changes. See the inner exception for details.
+   at Api.Web.WebApi.Infrastructure.Services.ServicesGeneric.RegisterVentas(SaveVentaRequestDTO _Request)
+   at Api.Web.WebApi.Controllers.SistemaWebController.RegisterVentas(SaveVentaRequestDTO _Request) in C:\Users\ivan.tapia\source\repos\Api.Web.WebApi\Api.Web.WebApi\Controllers\SistemaWebController.cs:line 213
+01/11/2023 09:54:24.5424 a. m. | An error occurred while saving the entity changes. See the inner exception for details.
+   at Api.Web.WebApi.Infrastructure.Services.ServicesGeneric.RegisterVentas(SaveVentaRequestDTO _Request) in C:\Users\ivan.tapia\source\repos\Api.Web.WebApi\Api.Web.WebApi.Infrastructure\Services\ServicesGeneric.cs:line 300
+   at Api.Web.WebApi.Controllers.SistemaWebController.RegisterVentas(SaveVentaRequestDTO _Request) in C:\Users\ivan.tapia\source\repos\Api.Web.WebApi\Api.Web.WebApi\Controllers\SistemaWebController.cs:line 213

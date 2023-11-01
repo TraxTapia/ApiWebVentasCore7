@@ -201,5 +201,25 @@ namespace Api.Web.WebApi.Controllers
             return _Response;
         }
 
+        [HttpPost, DisableRequestSizeLimit]
+        //[Produces("application/json")]
+        //[Consumes("application/json", "multipart/form-data")]
+        [Route("/RegisterVentas")]
+        public async Task<RegistroVentaResponseDTO> RegisterVentas(SaveVentaRequestDTO _Request)
+        {
+            RegistroVentaResponseDTO _Response = new RegistroVentaResponseDTO();
+            try
+            {
+                _Response = await _IServicesGeneric.RegisterVentas(_Request);
+            }
+            catch (Exception ex)
+            {
+                this._Logger.LogError(ex);
+                _Response.Result.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.Result.AddException(ex);
+            }
+            return _Response;
+        }
+
     }
 }

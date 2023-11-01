@@ -1,5 +1,6 @@
 ﻿using Api.Web.WebApi.DTO;
 using Api.Web.WebApi.DTO.OperationResult;
+using Api.Web.WebApi.DTO.Request;
 using Api.Web.WebApi.DTO.Response;
 using Api.Web.WebApi.Models.DBVenta;
 using System;
@@ -28,6 +29,7 @@ namespace Api.Web.WebApi.Infrastructure.Interfaces
         #endregion
         #region Venta & Detalle Venta
         Task<List<DetalleVentaDTO>> GetDetalleVentaByCodeDocument(string _NroDocumento);
+        Task<RegistroVentaResponseDTO> RegisterVentas(SaveVentaRequestDTO _Request);
         #endregion
 
     }

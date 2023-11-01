@@ -26,8 +26,8 @@ namespace Api.Web.WebApi.Models.DBVenta
 
         public DateTime? FechaRegistro { get; set; }
 
-        public virtual Producto Producto { get; set; }
+        //public virtual Producto Producto { get; set; }
 
-        public virtual Venta Venta { get; set; }
+        //public virtual Venta Venta { get; set; }
     }
 }

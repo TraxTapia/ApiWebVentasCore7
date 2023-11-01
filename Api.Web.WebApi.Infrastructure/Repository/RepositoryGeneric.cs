@@ -182,26 +182,52 @@ namespace Api.Web.WebApi.Infrastructure.Repository
         public async Task<RegistroVentaResponseDTO> RegisterVentas(SaveVentaRequestDTO _Request)
         {
             RegistroVentaResponseDTO _Response = new RegistroVentaResponseDTO();
+            int _IdDocumento;
             try
             {
                 var _IdUltimo = await this.GetTheLastRecord();
                 if (_IdUltimo != 0)
                 {
+                    _IdDocumento = _IdUltimo + 1;
                     Venta _SaveVenta = new Venta()
                     {
                         TipoPago = _Request.TipoPago,
-                        NumeroDocumento =string.Concat(_IdUltimo.ToString().PadLeft(5)),
+                        NumeroDocumento = string.Concat("00000", _IdDocumento.ToString()),
                         DocumentoCliente = _Request.DocumentoCliente,
                         NombreCliente = _Request.NombreCliente,
+                        MontoPagoCon = _Request.MontoPagoCon,
+                        MontoCambio = _Request.MontoCambio,
+                        MontoSubTotal = _Request.MontoSubTotal,
+                        MontoIGV = _Request.MontoIGV,
+                        MontoTotal = _Request.MontoTotal,
+                        FechaRegistro = DateTime.Now
                     };
+                    await _dbContext.Venta.AddAsync(_SaveVenta);
+                    await _dbContext.SaveChangesAsync();
+                    foreach (var item in _Request.DetalleVenta)
+                    {
+                        Detalle_Venta _SaveDetalleVenta = new Detalle_Venta()
+                        {
+                            IdVenta = _SaveVenta.IdVenta,
+                            IdProducto = item.IdProducto,
+                            PrecioVenta = item.PrecioVenta,
+                            Cantidad = item.Cantidad,
+                            Total = item.Total,
+                            FechaRegistro = DateTime.Now
+                        };
+                        await _dbContext.Detalle_Venta.AddAsync(_SaveDetalleVenta);
+                        await _dbContext.SaveChangesAsync();
+                        _Response.Result = await this.UpdateStock(item.IdProducto, item.Cantidad);
+                    }
+                    _Response.NroDocumento = _SaveVenta.NumeroDocumento;
                 }
 
             }
             catch (Exception ex)
             {
-
                 throw new Exception(ex.Message);
             }
+            return _Response;
         }
         public async Task<int> GetTheLastRecord()
         {
@@ -213,6 +239,28 @@ namespace Api.Web.WebApi.Infrastructure.Repository
             }
             _Id = Data.IdVenta;
             return _Id;
+        }
+        public async Task<OperationResult> UpdateStock(int _IdProducto, int Cantidad)
+        {
+            OperationResult _Response = new OperationResult();
+            try
+            {
+                var _ExistProduct = await GetProductById(_IdProducto);
+                if (_ExistProduct == null)
+                {
+                    _Response.SetStatusCode(OperationResult.StatusCodesEnum.NOT_FOUND);
+                    _Response.AddException(new Exception("No se encontraron resultados "));
+                    return _Response;
+                }
+                _ExistProduct.Stock = _ExistProduct.Stock - Cantidad;
+                _dbContext.Producto.Update(_ExistProduct);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return _Response;
         }
         #endregion
 

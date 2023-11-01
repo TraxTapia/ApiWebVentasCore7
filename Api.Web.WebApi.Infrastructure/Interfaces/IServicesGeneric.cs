@@ -30,6 +30,7 @@ namespace Api.Web.WebApi.Infrastructure.Interfaces
         #endregion
         #region Venta & Detalle Venta
         Task<ListVentaResponseDTO> GetVentaByNroDocumento(string _NroDocumento);
+        Task<RegistroVentaResponseDTO> RegisterVentas(SaveVentaRequestDTO _Request);
         #endregion
     }
 }
