@@ -9,7 +9,12 @@ namespace Api.Web.WebApi.Utilities.ApiServices
 {
     public class MessageFactory
     {
-        public T SendRequest<T>(string EndPointUrl, string Payload, HttpMethod Method)
+        private Logger.Logger _Logger;
+        public MessageFactory(Logger.Logger Logger)
+        {
+            this._Logger = Logger;
+        }
+        public T SendRequest<T>(string EndPointUrl, string Action, string Payload, HttpMethod Method)
         {
             string _Response = string.Empty;
             DateTime dt1 = DateTime.Now;
@@ -17,11 +22,15 @@ namespace Api.Web.WebApi.Utilities.ApiServices
             {
                 ServicePointManager.Expect100Continue = false;
                 ServicePointManager.DefaultConnectionLimit = 9999;
-                System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls | System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls12 | SecurityProtocolType.Tls13 | System.Net.SecurityProtocolType.Ssl3 | SecurityProtocolType.SystemDefault;
+                //System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls | System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls12 | SecurityProtocolType.Tls13 | System.Net.SecurityProtocolType.Ssl3 | SecurityProtocolType.SystemDefault;
+                System.Net.ServicePointManager.SecurityProtocol =
+    SecurityProtocolType.Tls |
+    SecurityProtocolType.Tls11 |
+    SecurityProtocolType.Tls12;
 
 
                 using (HttpClient _HttpClient = new HttpClient())
-                using (HttpRequestMessage _HttpRequestMessage = new HttpRequestMessage(Method, EndPointUrl))
+                using (HttpRequestMessage _HttpRequestMessage = new HttpRequestMessage(Method, EndPointUrl + Action))
                 {
                     _HttpClient.DefaultRequestHeaders.Clear();
                     _HttpClient.MaxResponseContentBufferSize = 2147483647;
