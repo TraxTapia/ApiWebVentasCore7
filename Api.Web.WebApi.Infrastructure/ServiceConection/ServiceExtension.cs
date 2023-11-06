@@ -5,6 +5,7 @@ using Api.Web.WebApi.Models.DBVenta;
 using Api.Web.WebApi.Infrastructure.Interfaces;
 using Api.Web.WebApi.Infrastructure.Services;
 using Api.Web.WebApi.Infrastructure.Repository;
+using Api.Web.WebApi.Models.DBIdenity;
 
 namespace Api.Web.WebApi.Infrastructure.ServiceConection
 {
@@ -16,10 +17,13 @@ namespace Api.Web.WebApi.Infrastructure.ServiceConection
             //{
             //    options.UseSqlServer(configuration.GetConnectionString("CadenaSQL"));
             //});
-                services.AddDbContext<DBContextVenta>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("CadenaSQL")),
-                ServiceLifetime.Scoped);
-
+            services.AddDbContext<DBContextVenta>(options =>
+            options.UseSqlServer(configuration.GetConnectionString("CadenaSQL")),
+            ServiceLifetime.Scoped);
+            services.AddDbContext<IdentityContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"));
+            });
 
             services.AddScoped<IServicesGeneric, ServicesGeneric>();
             services.AddScoped<IRepositoryGeneric, RepositoryGeneric>();

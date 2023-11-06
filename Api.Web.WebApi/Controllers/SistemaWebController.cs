@@ -3,6 +3,7 @@ using Api.Web.WebApi.DTO.Request;
 using Api.Web.WebApi.DTO.Response;
 using Api.Web.WebApi.Infrastructure.Interfaces;
 using Api.Web.WebApi.Utilities.Logger;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,9 +24,12 @@ namespace Api.Web.WebApi.Controllers
         }
 
         [HttpGet, DisableRequestSizeLimit]
+        [AuthorizeByApplication("APIWEB")]
+        //APIWEB
         //[Produces("application/json")]
         //[Consumes("application/json", "multipart/form-data")]
         [Route("/GetProducts")]
+
         public async Task<ListProductsResponseDTO> GetProducts()
         {
             ListProductsResponseDTO _Response = new ListProductsResponseDTO();
