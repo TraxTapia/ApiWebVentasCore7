@@ -24,7 +24,7 @@ namespace Api.Web.WebApi.Controllers
         }
 
         [HttpGet, DisableRequestSizeLimit]
-        [AuthorizeByApplication("APIWEB")]
+        [AuthorizeByApplication("ApiWeb")]
         //APIWEB
         //[Produces("application/json")]
         //[Consumes("application/json", "multipart/form-data")]
