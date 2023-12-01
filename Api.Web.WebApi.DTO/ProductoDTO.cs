@@ -17,5 +17,6 @@ namespace Api.Web.WebApi.DTO
         public decimal PrecioCompra { get; set; }
         public decimal PrecioVenta { get; set; }
         public int Stock { get; set; }
+        public bool Activo { get; set; }
     }
 }

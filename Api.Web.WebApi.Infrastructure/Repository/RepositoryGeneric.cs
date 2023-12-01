@@ -35,6 +35,7 @@ namespace Api.Web.WebApi.Infrastructure.Repository
                               PrecioCompra = a.PrecioCompra,
                               PrecioVenta = a.PrecioVenta,
                               Stock = a.Stock,
+                              Activo = a.Activo,
                           }).ToListAsync();
         }
         public async Task<OperationResult> SaveProduct(Producto _Request)

@@ -25,12 +25,11 @@ namespace Api.Web.WebApi.Controllers
 
         [HttpGet, DisableRequestSizeLimit]
         //[AuthorizeByApplication("ApiWeb")]
-        [Authorize(Roles = "ApiWeb")]
+        //[Authorize(Roles = "ApiWeb")]
         //APIWEB
         //[Produces("application/json")]
         //[Consumes("application/json", "multipart/form-data")]
         [Route("/GetProducts")]
-
         public async Task<ListProductsResponseDTO> GetProducts()
         {
             ListProductsResponseDTO _Response = new ListProductsResponseDTO();
