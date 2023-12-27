@@ -62,7 +62,7 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "Web Api",
+        Title = "Api Web",
         Description = "Api Rest"
     });
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
