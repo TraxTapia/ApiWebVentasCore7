@@ -1,4 +1,5 @@
 ﻿using Api.Web.WebApi.DTO;
+using Api.Web.WebApi.DTO.DTOApi;
 using Api.Web.WebApi.DTO.OperationResult;
 using Api.Web.WebApi.DTO.Request;
 using Api.Web.WebApi.DTO.Response;
@@ -37,6 +38,23 @@ namespace Api.Web.WebApi.Infrastructure.Repository
                               Stock = a.Stock,
                               Activo = a.Activo,
                           }).ToListAsync();
+        }
+        public List<ProductoDTO> GetProductos()
+        {
+            return  (from a in _dbContext.Producto
+                          join b in _dbContext.Categoria on a.IdCategoria equals b.IdCategoria
+                          select new ProductoDTO()
+                          {
+                              IdProducto = a.IdProducto,
+                              Codigo = a.Codigo,
+                              IdCategoria = a.IdCategoria,
+                              Categoria = b.Descripcion,
+                              Descripcion = a.Descripcion,
+                              PrecioCompra = a.PrecioCompra,
+                              PrecioVenta = a.PrecioVenta,
+                              Stock = a.Stock,
+                              Activo = a.Activo,
+                          }).ToList();
         }
         public async Task<OperationResult> SaveProduct(Producto _Request)
         {
@@ -264,6 +282,7 @@ namespace Api.Web.WebApi.Infrastructure.Repository
             return _Response;
         }
         #endregion
+     
 
     }
 }

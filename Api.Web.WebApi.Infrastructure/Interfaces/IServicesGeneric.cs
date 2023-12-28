@@ -32,5 +32,8 @@ namespace Api.Web.WebApi.Infrastructure.Interfaces
         Task<ListVentaResponseDTO> GetVentaByNroDocumento(string _NroDocumento);
         Task<RegistroVentaResponseDTO> RegisterVentas(SaveVentaRequestDTO _Request);
         #endregion
+        #region Filtros 
+        public ListAutocompleteResponseDTO Autocomplete(string _Search);
+        #endregion
     }
 }

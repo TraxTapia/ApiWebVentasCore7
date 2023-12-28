@@ -15,6 +15,7 @@ namespace Api.Web.WebApi.Infrastructure.Interfaces
     {
         #region Productos
         Task<List<ProductoDTO>> GetAllProductos();
+        List<ProductoDTO> GetProductos();
         Task<OperationResult> SaveProduct(Producto _Request);
         Task<Producto> GetProductById(int Id);
         Task<OperationResult> UpdateProduct(Producto _Request);

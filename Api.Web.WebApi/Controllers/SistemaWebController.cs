@@ -224,6 +224,22 @@ namespace Api.Web.WebApi.Controllers
             }
             return _Response;
         }
-
+        [HttpPost]
+        [Route("/Autocomplete")]
+        public ListAutocompleteResponseDTO Autocomplete([FromBody]string _Search)
+        {
+            ListAutocompleteResponseDTO _Response = new ListAutocompleteResponseDTO();
+            try
+            {
+                _Response =  _IServicesGeneric.Autocomplete(_Search);
+            }
+            catch (Exception ex)
+            {
+                this._Logger.LogError(ex);
+                _Response.Result.SetStatusCode(OperationResult.StatusCodesEnum.INTERNAL_SERVER_ERROR);
+                _Response.Result.AddException(ex);
+            }
+            return _Response;
+        }
     }
 }

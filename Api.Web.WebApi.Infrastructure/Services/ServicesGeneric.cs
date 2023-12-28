@@ -16,6 +16,7 @@ using Api.Web.WebApi.DTO.Request;
 using System.Runtime.InteropServices;
 using Api.Web.WebApi.Utilities.Utilities;
 using Api.Web.WebApi.Infrastructure.Repository;
+using Api.Web.WebApi.DTO.DTOApi;
 
 namespace Api.Web.WebApi.Infrastructure.Services
 {
@@ -301,8 +302,22 @@ namespace Api.Web.WebApi.Infrastructure.Services
             }
             return _Response;
         }
-
         #endregion
+        #region Filtros
+        public ListAutocompleteResponseDTO Autocomplete(string _Search)
+        {
+            ListAutocompleteResponseDTO autocomplete = new ListAutocompleteResponseDTO();
+            autocomplete.Autocomplete = _Repo.GetProductos()
+                .Where(x => string.Concat(x.Codigo.ToUpper(), x.Categoria.ToUpper(), x.Descripcion.ToUpper()).Contains(_Search.ToUpper()))
+                .Select(m => new AutocompleteDTO
+                {
+                    label = $"{m.Codigo} - {m.Categoria} - {m.Descripcion}",
+                    value = m.IdProducto
+                }
+                ).ToList();
+            return autocomplete;
+        }
+        #endregion 
 
 
 
